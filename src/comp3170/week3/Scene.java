@@ -10,12 +10,14 @@ import static org.lwjgl.opengl.GL11.glPolygonMode;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import comp3170.GLBuffers;
 import comp3170.Shader;
 import comp3170.ShaderLibrary;
+import static comp3170.Math.TAU;
 
 public class Scene {
 
@@ -30,6 +32,16 @@ public class Scene {
 	private int colourBuffer;
 
 	private Shader shader;
+	
+	private Matrix4f modelMatrix = new Matrix4f();
+	private Matrix4f transMatrix = new Matrix4f();
+	private Matrix4f rotMatrix = new Matrix4f();
+	private Matrix4f scalMatrix = new Matrix4f();
+	
+	final private Vector3f OFFSET = new Vector3f(0.25f, 0.0f, 0.0f);
+	final private float MOVEMENT_SPEED = 1f;
+	final private float SCALE = 0.1f;
+	final private float ROTATION_RATE = TAU/12;
 
 	public Scene() {
 
@@ -80,7 +92,22 @@ public class Scene {
 		
 		
 		
-
+		// Using different methods:
+		//translationMatrix(offset, transMatrix);
+		//scaleMatrix(scale, scalMatrix);
+		//rotationMatrix(rotation, rotMatrix);
+		// modelMatrix.mul(transMatrix).mul(rotMatrix).mul(scalMatrix); //T R S order
+		
+		//Using JOML methods:
+		modelMatrix.translate(OFFSET).scale(SCALE);
+		
+	}
+	
+	public void update (float deltaTime) {
+		
+		float movement = MOVEMENT_SPEED * deltaTime;
+		float rotation = ROTATION_RATE * deltaTime;
+		modelMatrix.translateLocal(0.0f, movement, 0.0f).rotateZ(rotation);
 	}
 
 	public void draw() {
@@ -88,6 +115,8 @@ public class Scene {
 		shader.enable();
 		// set the attributes
 		shader.setAttribute("a_position", vertexBuffer);
+		shader.setUniform("u_modelMatrix", modelMatrix);
+		
 		shader.setAttribute("a_colour", colourBuffer);
 
 		// draw using index buffer
