@@ -77,6 +77,9 @@ public class Scene {
 			// @formatter:on
 
 		indexBuffer = GLBuffers.createIndexBuffer(indices);
+		
+		
+		
 
 	}
 
@@ -135,6 +138,10 @@ public class Scene {
 	public static Matrix4f rotationMatrix(float angle, Matrix4f dest) {
 
 		// TODO: Your code here
+		dest.m00((float) Math.cos(angle));
+		dest.m01((float) Math.sin(angle));
+		dest.m10((float) Math.sin(-angle));
+		dest.m11((float) Math.cos(angle));
 
 		return dest;
 	}
@@ -152,7 +159,9 @@ public class Scene {
 	public static Matrix4f scaleMatrix(float sx, float sy, Matrix4f dest) {
 
 		// TODO: Your code here
-
+		dest.m00(sx);
+		dest.m11(sy);
+		
 		return dest;
 	}
 
