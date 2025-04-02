@@ -39,7 +39,7 @@ public class Scene {
 	private Matrix4f scalMatrix = new Matrix4f();
 	
 	final private Vector3f OFFSET = new Vector3f(0.25f, 0.0f, 0.0f);
-	final private float MOVEMENT_SPEED = 1f;
+	final private float MOVEMENT_SPEED = 0.25f;
 	final private float SCALE = 0.1f;
 	final private float ROTATION_RATE = TAU/12;
 

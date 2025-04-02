@@ -11,7 +11,7 @@ void main() {
 	v_colour = a_colour;
 
 	// pad the vertex to a homogeneous 3D point
-    gl_Position = u_modelmatrix * a_position;
+    gl_Position = u_modelMatrix * a_position;
 
 }
 
