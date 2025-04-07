@@ -39,9 +39,9 @@ public class Scene {
 	private Matrix4f scalMatrix = new Matrix4f();
 	
 	final private Vector3f OFFSET = new Vector3f(0.25f, 0.0f, 0.0f);
-	final private float MOVEMENT_SPEED = 0.25f;
-	final private float SCALE = 0.1f;
-	final private float ROTATION_RATE = TAU/12;
+	final private float MOVEMENT_SPEED = 4f;
+	final private float SCALE_RATE = 0.1f;
+	final private float ROTATION_RATE = TAU/4;
 
 	public Scene() {
 
@@ -99,7 +99,7 @@ public class Scene {
 		// modelMatrix.mul(transMatrix).mul(rotMatrix).mul(scalMatrix); //T R S order
 		
 		//Using JOML methods:
-		modelMatrix.translate(OFFSET).scale(SCALE);
+		modelMatrix.translate(OFFSET).scale(SCALE_RATE);
 		
 	}
 	
@@ -107,7 +107,8 @@ public class Scene {
 		
 		float movement = MOVEMENT_SPEED * deltaTime;
 		float rotation = ROTATION_RATE * deltaTime;
-		modelMatrix.translateLocal(0.0f, movement, 0.0f).rotateZ(rotation);
+		float scale = (float) Math.pow(SCALE_RATE, deltaTime);
+		modelMatrix.translate(0.0f, movement, 0.0f).rotateZ(rotation);
 	}
 
 	public void draw() {
